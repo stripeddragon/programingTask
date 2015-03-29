@@ -57,6 +57,18 @@ function characterWalk_handlerDown(event:KeyboardEvent):void
 				mainCharacter.gotoAndStop(1);
 			}
 	}
+	if(mainCharacter.x >= 768)
+	{
+		foreGround.x -= 6
+		middleGround.x -=4
+		backGround.x -=2
+	}
+	if(mainCharacter.x <= 256)
+	{
+		foreGround.x += 6
+		middleGround.x +=4
+		backGround.x +=2
+	}
 }
 
 stage.addEventListener(KeyboardEvent.KEY_UP, characterWalk_handlerUp)
