@@ -34,17 +34,24 @@ function characterWalk_handlerDown(event:KeyboardEvent):void
 	{
 		mainCharacter.play()
 		mainCharacter.scaleX = 1;
-		mainCharacter.x += 5;
-		if(mainCharacter.currentFrame >=23)
-		{
-			mainCharacter.gotoAndStop(1);
-		}		
+		
+			if(mainCharacter.x <= 768)
+			{
+			mainCharacter.x += 5;
+			}
+			if(mainCharacter.currentFrame >=23)
+			{
+				mainCharacter.gotoAndStop(1);
+			}		
 	}
 	if(event.keyCode==37)
 	{
 		mainCharacter.scaleX = -1;
 		mainCharacter.play()
-		mainCharacter.x -= 5 ;
+			if(mainCharacter.x >= 256)
+			{
+			mainCharacter.x -= 5 ;
+			}
 			if(mainCharacter.currentFrame >=23)
 			{
 				mainCharacter.gotoAndStop(1);
