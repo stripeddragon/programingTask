@@ -1,4 +1,5 @@
 ﻿import flash.display.MovieClip;
+import flash.events.Event;
 
 var backGround:Background=new Background();
 
@@ -14,9 +15,17 @@ middleGround.scaleX = 3;
 middleGround.scaleY = 3;
 addChild(middleGround);
 
+var myBunny:Bunny=new Bunny();
+myBunny.x=1220;
+myBunny.y=470;
+myBunny.scaleX= 0.5;
+myBunny.scaleY= 0.5;
+myBunny.gotoAndStop(1);
+addChild(myBunny);
+
 var mainCharacter:Character=new Character();
-mainCharacter.x=200;
-mainCharacter.y=200;
+mainCharacter.x=500;
+mainCharacter.y=400;
 addChild(mainCharacter);
 mainCharacter.gotoAndStop(1)
 
@@ -57,23 +66,42 @@ function characterWalk_handlerDown(event:KeyboardEvent):void
 				mainCharacter.gotoAndStop(1);
 			}
 	}
+
 	if(mainCharacter.x >= 768)
 	{
-		foreGround.x -= 6
-		middleGround.x -=4
-		backGround.x -=2
+		foreGround.x -= 8
+		middleGround.x -=6
+		backGround.x -=4
+		myBunny.x -=6
 	}
 	if(mainCharacter.x <= 256)
 	{
-		foreGround.x += 6
-		middleGround.x +=4
-		backGround.x +=2
+		foreGround.x += 8
+		middleGround.x +=6
+		backGround.x +=4
+		myBunny.x +=6
 	}
 }
 
-stage.addEventListener(KeyboardEvent.KEY_UP, characterWalk_handlerUp)
+stage.addEventListener(KeyboardEvent.KEY_UP, characterWalk_handlerUp);
 function characterWalk_handlerUp(event:KeyboardEvent):void
 {
 	mainCharacter.gotoAndStop(1)
 }
-
+stage.addEventListener(Event.ENTER_FRAME, collisionDetection_bunny);
+function collisionDetection_bunny(event:Event):void
+{
+	if(myBunny.hitTestObject(mainCharacter) == true)
+	{
+		myBunny.play();
+		
+		if(myBunny.currentFrame == 10)
+		{
+			myBunny.stop();
+		}		
+	}
+	else
+	{
+		myBunny.nextFrame()
+	}
+}
