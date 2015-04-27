@@ -41,26 +41,29 @@ foreGround.scaleX = 3;
 foreGround.scaleY = 3;
 addChild(foreGround);
 
+var buttonPress:Boolean = false;
+
 stage.addEventListener(KeyboardEvent.KEY_DOWN, characterWalk_handlerDown)
 function characterWalk_handlerDown(event:KeyboardEvent):void
 {
 	if(event.keyCode==39)
 	{
-		mainCharacter.play()
+		mainCharacter.play();
 		mainCharacter.scaleX = 1;
 			if(mainCharacter.x <= 768)
 			{
-			mainCharacter.x += 5;
+				mainCharacter.x += 5;
 			}
 			if(mainCharacter.currentFrame >=23)
 			{
 				mainCharacter.gotoAndStop(1);
-			}	
+			}
 	}
+	
 	if(event.keyCode==37)
 	{
 		mainCharacter.scaleX = -1;
-		mainCharacter.play()
+		mainCharacter.play();
 			if(mainCharacter.x >= 256)
 			{
 			mainCharacter.x -= 5 ;
@@ -69,12 +72,12 @@ function characterWalk_handlerDown(event:KeyboardEvent):void
 			{
 				mainCharacter.gotoAndStop(1);
 			}
-
 	}
-	if(event.keyCode==32)
-	{
-		mainCharacter.y -=2;
+	if(event.keyCode==38)
+	{	
 		mainCharacter.gotoAndPlay(26);
+		mainCharacter.y-=4;
+		buttonPress=true;
 	}
 
 	if(mainCharacter.x >= 768)
@@ -116,14 +119,19 @@ function collisionDetection_bunny(event:Event):void
 	}
 }
 
-/*mainCharacter.addEventListener(Event.ENTER_FRAME, gravityFunction);
 var gravity:Number = 1.1;
 var velocity:Number =.25;
+
+mainCharacter.addEventListener(Event.ENTER_FRAME, gravityFunction);
 function gravityFunction(event:Event):void
 {  
-		if(mainCharacter.hitTestObject(myPlatform) == false && (keyPress) == false)
-		{
-			mainCharacter.y += velocity;
-			velocity *= gravity;
-		}
+	if(mainCharacter.hitTestObject(myPlatform) == false)
+	{
+		mainCharacter.y += velocity;
+		velocity *= gravity;
+	}
+	if(mainCharacter.hitTestObject(myPlatform) == true)
+	{
+		velocity=1.1;
+	}
 }
