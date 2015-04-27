@@ -41,13 +41,16 @@ foreGround.scaleX = 3;
 foreGround.scaleY = 3;
 addChild(foreGround);
 
-var buttonPress:Boolean = false;
+var keyPressLeft:Boolean = false;
+var keyPressRight:Boolean = false;
+var keyPressUp:Boolean = false;
 
 stage.addEventListener(KeyboardEvent.KEY_DOWN, characterWalk_handlerDown)
 function characterWalk_handlerDown(event:KeyboardEvent):void
 {
 	if(event.keyCode==39)
 	{
+		keyPressRight=true;
 		mainCharacter.play();
 		mainCharacter.scaleX = 1;
 			if(mainCharacter.x <= 768)
@@ -62,6 +65,7 @@ function characterWalk_handlerDown(event:KeyboardEvent):void
 	
 	if(event.keyCode==37)
 	{
+		keyPressLeft= true;
 		mainCharacter.scaleX = -1;
 		mainCharacter.play();
 			if(mainCharacter.x >= 256)
@@ -75,11 +79,19 @@ function characterWalk_handlerDown(event:KeyboardEvent):void
 	}
 	if(event.keyCode==38)
 	{	
+		keyPressUp= true;
 		mainCharacter.gotoAndPlay(26);
 		mainCharacter.y-=4;
-		buttonPress=true;
+		
 	}
-
+	if(keyPressRight==true && keyPressUp == true)
+	{
+		mainCharacter.x+=2
+	}
+	if(keyPressLeft == true && keyPressUp == true)
+	{
+		mainCharacter.x-=2
+	}
 	if(mainCharacter.x >= 768)
 	{
 		foreGround.x -= 8
@@ -100,6 +112,9 @@ stage.addEventListener(KeyboardEvent.KEY_UP, characterWalk_handlerUp);
 function characterWalk_handlerUp(event:KeyboardEvent):void
 {
 	mainCharacter.gotoAndStop(1)
+	keyPressUp=false;
+	keyPressRight=false;
+	keyPressLeft=false;
 }
 stage.addEventListener(Event.ENTER_FRAME, collisionDetection_bunny);
 function collisionDetection_bunny(event:Event):void
